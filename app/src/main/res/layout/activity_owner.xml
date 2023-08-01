@@ -5,13 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Owner.OwnerActivity">
-
-
     <Button
-        android:id="@+id/photosBtn"
+        android:id="@+id/postBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get Photos"
+        android:text="Post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

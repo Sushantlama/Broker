@@ -20,11 +20,29 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Renter.RenterLoginActivity"
+            android:name=".Renter.RenterActivity"
             android:exported="false" />
         <activity
+            android:name=".Renter.RenterLoginActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Renter.NewRenterLoginActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Renter.RenterSetUpProfile"
+            android:exported="false"/>
+        <activity
+            android:name=".Renter.NewRenterSignUpActivity"
+            android:exported="false"/>
+        <activity
             android:name=".Owner.PostActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".Owner.OwnerSetUpProfile"
+            android:exported="false" />
+        <activity
+            android:name=".Owner.OwnerLoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,20 +50,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Owner.OwnerSetUpProfile"
-            android:exported="false" />
-        <activity
-            android:name=".Owner.OwnerLoginActivity"
-            android:exported="false" />
-        <activity
             android:name=".Owner.OwnerSignupActivity"
             android:exported="false" />
         <activity
-            android:name=".Renter.RenterActivity"
-            android:exported="false" />
-        <activity
             android:name=".Owner.OwnerActivity"
-            android:exported="false" /> <!-- </activity> -->
+            android:exported="false" />
         <activity
             android:name=".Main.MainActivity"
             android:exported="false" />

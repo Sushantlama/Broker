@@ -80,16 +80,18 @@ public class OwnerLoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                if(user.isEmailVerified()){
-                                    Intent i = new Intent(getApplicationContext(), OwnerActivity.class);
-                                    startActivity(i);
-                                    finish();
+                                if(user!= null){
+                                    if(user.isEmailVerified()){
+                                        Intent i = new Intent(getApplicationContext(), OwnerActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                    else{
+                                        mAuth.signOut();
+                                        Toast.makeText(OwnerLoginActivity.this, "Please Verify email and try again", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                else{
-                                    mAuth.signOut();
-                                    Toast.makeText(OwnerLoginActivity.this, "Please Verify email and try again", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
+
                                 // Sign in success, update UI with the signed-in user's information
 //                              updateUI(user);
                             } else {
