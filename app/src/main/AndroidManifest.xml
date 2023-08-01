@@ -20,10 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Renter.RenterLoginActivity"
+            android:name=".Renter.RenterActivity"
             android:exported="false" />
         <activity
-            android:name=".Owner.PostActivity"
+            android:name=".Renter.RenterLoginActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Renter.NewRenterLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +34,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Renter.RenterSetUpProfile"
+            android:exported="false"/>
+        <activity
+            android:name=".Renter.NewRenterSignUpActivity"
+            android:exported="false"/>
+
+
+        <activity
+            android:name=".Owner.PostActivity"
+            android:exported="false" />
         <activity
             android:name=".Owner.OwnerSetUpProfile"
             android:exported="false" />
@@ -39,9 +54,6 @@
             android:exported="false" />
         <activity
             android:name=".Owner.OwnerSignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Renter.RenterActivity"
             android:exported="false" />
         <activity
             android:name=".Owner.OwnerActivity"
