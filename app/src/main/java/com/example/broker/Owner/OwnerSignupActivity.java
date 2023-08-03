@@ -74,7 +74,6 @@ public class OwnerSignupActivity extends AppCompatActivity {
 
 
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();
         storage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -147,12 +146,13 @@ public class OwnerSignupActivity extends AppCompatActivity {
             return;
         }
         StorageReference storageReference = storage.getReference().child("Profiles").child(user.getUid());
+        databaseReference = database.getReference().child("users").child("owner");
         if(image.equals(NoImg)){
             String uid = user.getUid();
             String email = user.getEmail();
             Owner owner = new Owner(uid,name,email,image,age,phone);
             Map<String, Object> update = new HashMap<>();
-            update.put("users/"+uid, owner);
+            update.put(uid, owner);
             databaseReference.updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
@@ -167,31 +167,11 @@ public class OwnerSignupActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(OwnerSignupActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "onFailure: "+e);
+                    mAuth.signOut();
+                    Toast.makeText(OwnerSignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
                 }
             });
-//            databaseReference
-//                    .child("users")
-//                    .child(uid)
-//                    .setValue(owner)
-//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void unused) {
-//                            mAuth.signOut();
-//                            Log.d(TAG, "createUserWithEmail:success");
-//                            Intent i = new Intent(getApplicationContext(), OwnerLoginActivity.class);
-//                            Toast.makeText(OwnerSignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
-//                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            startActivity(i);
-//                            finish();
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(OwnerSignupActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
         }
         else{
             Uri imageUri = Uri.parse(image);
@@ -207,7 +187,7 @@ public class OwnerSignupActivity extends AppCompatActivity {
                                 String email = user.getEmail();
                                 Owner owner = new Owner(uid,name,email,imageDownloadUri,age,phone);
                                 Map<String, Object> update = new HashMap<>();
-                                update.put("users/"+uid, owner);
+                                update.put(uid, owner);
                                 databaseReference
                                         .updateChildren(update)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -225,31 +205,11 @@ public class OwnerSignupActivity extends AppCompatActivity {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(OwnerSignupActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                                                mAuth.signOut();
+                                                Log.i(TAG, "onFailure: "+e);
+                                                Toast.makeText(OwnerSignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
                                             }
                                         });
-//                                databaseReference
-//                                        .child("users")
-//                                        .child(uid)
-//                                        .setValue(owner)
-//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void unused) {
-//                                                Log.d(TAG, "createUserWithEmail:success");
-//                                                mAuth.signOut();
-//                                                Intent i = new Intent(getApplicationContext(), OwnerLoginActivity.class);
-//                                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                                Toast.makeText(OwnerSignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
-//                                                startActivity(i);
-//                                                finish();
-//                                            }
-//                                        })
-//                                        .addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception e) {
-//                                                Toast.makeText(OwnerSignupActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        });
                             }
                         });
                     }

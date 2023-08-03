@@ -8,30 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.broker.Main.MainActivity;
 import com.example.broker.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Objects;
 
 public class OwnerSetUpProfile extends AppCompatActivity {
 
@@ -107,7 +89,6 @@ public class OwnerSetUpProfile extends AppCompatActivity {
                     intent.putExtra("image",image);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(OwnerSetUpProfile.this, "2", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), OwnerSignupActivity.class);
                     intent.putExtra("name",name);
                     intent.putExtra("age",age);

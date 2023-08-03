@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.broker.R;
 import com.example.broker.Room.room;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -166,7 +165,7 @@ public class PostActivity extends AppCompatActivity {
         }
 
         Log.i(TAG, "post: " + roomName + " "+ roomAddress+" "+roomBedrooms+" "+roomBathrooms+" "+roomKitchen+" "+roomRent+" "+roomAdvance);
-        databaseReference1 = firebaseDatabase.getReference("users/"+firebaseAuth.getUid());
+        databaseReference1 = firebaseDatabase.getReference("users/owner/"+firebaseAuth.getUid());
         databaseReference1
                 .addValueEventListener(new ValueEventListener() {
                     @Override
