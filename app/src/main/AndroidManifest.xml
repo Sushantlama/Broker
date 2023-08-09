@@ -23,34 +23,21 @@
             android:name=".Renter.RenterActivity"
             android:exported="false" />
         <activity
-            android:name=".Renter.RenterLoginActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".Renter.NewRenterLoginActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".Renter.RenterSetUpProfile"
-            android:exported="false"/>
-        <activity
-            android:name=".Renter.NewRenterSignUpActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".Owner.PostActivity"
+            android:name=".Owner.Fragments.PostActivity"
             android:exported="false" />
         <activity
-            android:name=".Owner.OwnerSetUpProfile"
+            android:name=".Main.SetupProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Owner.OwnerLoginActivity"
-            android:exported="true" >
+            android:name=".Main.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Owner.OwnerSignupActivity"
+            android:name=".Main.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".Owner.OwnerActivity"

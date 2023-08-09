@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".Owner.Fragments.ProfileFragment">
+    tools:context=".Renter.Fragments.RenterProfileFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImageView"
+        android:id="@+id/rProfileImageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="40dp"
         android:src="@drawable/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +20,7 @@
     <TextView
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/profileName"
+        android:id="@+id/rProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User name"
@@ -29,21 +28,21 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/rProfileImageView" />
 
     <TextView
-        android:id="@+id/profileEmail"
+        android:id="@+id/rProfileEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="email"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileName" />
+        app:layout_constraintTop_toBottomOf="@+id/rProfileName" />
 
 
     <TextView
-        android:id="@+id/profileNumber"
+        android:id="@+id/rProfileNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -51,10 +50,10 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/rProfileEmail" />
 
     <Button
-        android:id="@+id/logoutBtn"
+        android:id="@+id/rLogoutBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
@@ -65,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/profileEditBtn"
+        android:id="@+id/rProfileEditBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -74,7 +73,8 @@
         android:textColor="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/rProfileNumber" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

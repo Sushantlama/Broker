@@ -1,21 +1,31 @@
-package com.example.broker.Owner;
+package com.example.broker.Main;
 
-public class Owner {
+public class User {
     private String uid,name,Email,profileImage,age,phoneNumber;
+    private users user;
 
-    public  Owner(){
+
+    public User(){
 
     }
 
-    public Owner(String uid,String name,String Email,String profileImage,String age,String phoneNumber){
+    public User(String uid, String name, String Email, String profileImage, String age, String phoneNumber,users user){
         this.uid = uid;
         this.name = name;
         this.Email = Email;
         this.profileImage = profileImage;
         this.age = age;
         this.phoneNumber = phoneNumber;
+        this.user = user;
     }
 
+    public void setUser(users user) {
+        this.user = user;
+    }
+
+    public users getUser() {
+        return user;
+    }
 
     public void setUid(String uid) {
         this.uid = uid;

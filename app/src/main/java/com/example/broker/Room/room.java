@@ -4,14 +4,18 @@ public class room {
     private String roomName;
     private String roomAddress;
     private String roomBedrooms;
-    private String  roomBathrooms;
-    private String  roomKitchen;
+    private String roomBathrooms;
+    private String roomKitchen;
     private String roomRent;
-    private String  roomAdvance;
+    private String roomAdvance;
     private String roomOwner;
     private String imageUrl;
 
-    public room(String RoomName, String RoomAddress, String  RoomBedrooms, String RoomBathrooms, String RoomKitchen, String RoomRent, String RoomAdvance, String RoomOwner,String ImageUrl){
+    public room() {
+
+    }
+
+    public room(String RoomName, String RoomAddress, String RoomBedrooms, String RoomBathrooms, String RoomKitchen, String RoomRent, String RoomAdvance, String RoomOwner, String ImageUrl) {
         this.roomName = RoomName;
         this.roomAddress = RoomAddress;
         this.roomBedrooms = RoomBedrooms;
@@ -22,7 +26,6 @@ public class room {
         this.roomOwner = RoomOwner;
         this.imageUrl = ImageUrl;
     }
-
 
 
     public String getRoomName() {
@@ -88,6 +91,7 @@ public class room {
     public void setRoomOwner(String roomOwner) {
         this.roomOwner = roomOwner;
     }
+
     public String getImageUrl() {
         return imageUrl;
     }

@@ -1,16 +1,25 @@
-package com.example.broker.Owner;
+package com.example.broker.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.broker.Owner.OwnerActivity;
 import com.example.broker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,7 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OwnerSignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "OwnerSignup";
     private static final String NoImg = "No Image";
@@ -46,30 +55,33 @@ public class OwnerSignupActivity extends AppCompatActivity {
     private  String age;
     private  String phone;
     private String image;
+    private users myuser;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
-            Toast.makeText(this, "user exist", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(getApplicationContext(), OwnerActivity.class);
-            startActivity(i);
-            finish();
 
-        }
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_signup);
+        setContentView(R.layout.activity_signup);
         getSupportActionBar().hide();
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.theme_color));
+        window.setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         age = intent.getStringExtra("age");
         phone = intent.getStringExtra("phone");
         image = intent.getStringExtra("image");
+        if(intent.getIntExtra("users",0) == 0){
+            myuser = users.Renter;
+        }
+        else{
+            myuser = users.Owner;
+        }
 
 
 
@@ -77,9 +89,12 @@ public class OwnerSignupActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        Button signupBtn = (Button) findViewById(R.id.SignupBtn);
-        login = findViewById(R.id.Login);
-        init();
+        Button signupBtn = (Button) findViewById(R.id.oSignupBtn);
+        login = findViewById(R.id.oSignupLoginBtn);
+        etEmail = findViewById(R.id.oSignupMailBox);
+        etPassword = findViewById(R.id.oSignupPassBox);
+
+
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,17 +104,13 @@ public class OwnerSignupActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), OwnerLoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 finish();
             }
         });
     }
 
-    private  void init(){
-        etEmail = findViewById(R.id.OwnerSignUpEmail);
-        etPassword = findViewById(R.id.OwnerSignUpPassword);
-    }
 
     private void CreateAccount(){
         String email = etEmail.getText().toString().trim();
@@ -112,6 +123,8 @@ public class OwnerSignupActivity extends AppCompatActivity {
             etEmail.setError("Please type a Password");
             return;
         }
+
+
 
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -128,14 +141,14 @@ public class OwnerSignupActivity extends AppCompatActivity {
                                     }
                                     else{
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(OwnerSignupActivity.this, "Could Not send Verification Mail", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignupActivity.this, "Could Not send Verification Mail", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                         }
                         else{
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(OwnerSignupActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -146,11 +159,11 @@ public class OwnerSignupActivity extends AppCompatActivity {
             return;
         }
         StorageReference storageReference = storage.getReference().child("Profiles").child(user.getUid());
-        databaseReference = database.getReference().child("users").child("owner");
+        databaseReference = database.getReference().child("users");
         if(image.equals(NoImg)){
             String uid = user.getUid();
             String email = user.getEmail();
-            Owner owner = new Owner(uid,name,email,image,age,phone);
+            User owner = new User(uid,name,email,image,age,phone,myuser);
             Map<String, Object> update = new HashMap<>();
             update.put(uid, owner);
             databaseReference.updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -158,8 +171,8 @@ public class OwnerSignupActivity extends AppCompatActivity {
                 public void onSuccess(Void unused) {
                     mAuth.signOut();
                     Log.d(TAG, "createUserWithEmail:success");
-                    Intent i = new Intent(getApplicationContext(), OwnerLoginActivity.class);
-                    Toast.makeText(OwnerSignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    Toast.makeText(SignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     finish();
@@ -169,7 +182,7 @@ public class OwnerSignupActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Exception e) {
                     Log.i(TAG, "onFailure: "+e);
                     mAuth.signOut();
-                    Toast.makeText(OwnerSignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -185,9 +198,9 @@ public class OwnerSignupActivity extends AppCompatActivity {
                                 String imageDownloadUri = uri.toString();
                                 String uid = user.getUid();
                                 String email = user.getEmail();
-                                Owner owner = new Owner(uid,name,email,imageDownloadUri,age,phone);
+                                User user = new User(uid,name,email,imageDownloadUri,age,phone,myuser);
                                 Map<String, Object> update = new HashMap<>();
-                                update.put(uid, owner);
+                                update.put(uid, user);
                                 databaseReference
                                         .updateChildren(update)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -195,9 +208,9 @@ public class OwnerSignupActivity extends AppCompatActivity {
                                             public void onSuccess(Void unused) {
                                                 Log.d(TAG, "createUserWithEmail:success");
                                                 mAuth.signOut();
-                                                Intent i = new Intent(getApplicationContext(), OwnerLoginActivity.class);
+                                                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                Toast.makeText(OwnerSignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
                                                 startActivity(i);
                                                 finish();
                                             }
@@ -207,7 +220,7 @@ public class OwnerSignupActivity extends AppCompatActivity {
                                             public void onFailure(@NonNull Exception e) {
                                                 mAuth.signOut();
                                                 Log.i(TAG, "onFailure: "+e);
-                                                Toast.makeText(OwnerSignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
