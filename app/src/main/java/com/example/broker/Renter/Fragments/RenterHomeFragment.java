@@ -1,6 +1,11 @@
 package com.example.broker.Renter.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,15 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.broker.Owner.Fragments.PostAdapter;
 import com.example.broker.R;
+import com.example.broker.Renter.RoomActivity;
 import com.example.broker.Renter.RoomAdapter;
 import com.example.broker.Room.room;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class RenterHomeFragment extends Fragment {
+public class RenterHomeFragment extends Fragment implements RecyclerViewInterface{
+
 
     RecyclerView recyclerView;
     ArrayList<room> rooms;
@@ -58,7 +58,7 @@ public class RenterHomeFragment extends Fragment {
 
 
         rooms = new ArrayList<>();
-        roomAdapter = new RoomAdapter(rooms, this);
+        roomAdapter = new RoomAdapter(rooms, this, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(roomAdapter);
 
@@ -99,5 +99,21 @@ public class RenterHomeFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        room room = rooms.get(position);
+        Intent intent = new Intent(getContext(),RoomActivity.class);
+        intent.putExtra("roomName",room.getRoomName());
+        intent.putExtra("roomAddress",room.getRoomAddress());
+        intent.putExtra("roomBedrooms",room.getRoomBedrooms());
+        intent.putExtra("roomBathrooms",room.getRoomBathrooms());
+        intent.putExtra("roomKitchen",room.getRoomKitchen());
+        intent.putExtra("roomRent",room.getRoomRent());
+        intent.putExtra("roomAdvance",room.getRoomAdvance());
+        intent.putExtra("roomOwner",room.getRoomOwner());
+        intent.putExtra("imageUrl",room.getImageUrl());
+        startActivity(intent);
     }
 }

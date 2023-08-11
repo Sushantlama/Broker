@@ -1,6 +1,5 @@
 package com.example.broker.Renter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.broker.R;
+import com.example.broker.Renter.Fragments.RecyclerViewInterface;
 import com.example.broker.Room.room;
 
 import java.util.ArrayList;
@@ -20,17 +20,20 @@ import java.util.ArrayList;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder> {
     ArrayList<room> rooms;
     Fragment fragment;
+    private final RecyclerViewInterface recyclerViewInterface;
 
-    public RoomAdapter(ArrayList<room> rooms, Fragment fragment) {
+
+    public RoomAdapter(ArrayList<room> rooms, Fragment fragment, RecyclerViewInterface recyclerViewInterface) {
         this.rooms = rooms;
         this.fragment = fragment;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rooms_list_item, parent, false);
-        return new viewHolder(view);
+        return new viewHolder(view,recyclerViewInterface);
     }
 
     @Override
@@ -66,7 +69,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder> {
         private TextView listRent;
         private TextView listBathrooms;
 
-        public viewHolder(@NonNull View itemView) {
+        public viewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             listImg = itemView.findViewById(R.id.listRoomImg);
             listName = itemView.findViewById(R.id.listName);
@@ -75,6 +78,17 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.viewHolder> {
             listBeds = itemView.findViewById(R.id.listBeds);
             listRent = itemView.findViewById(R.id.listRent);
             listBathrooms = itemView.findViewById(R.id.listBathrooms);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+                        if(pos !=  RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
 
         public ImageView getListImg() {
