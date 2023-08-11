@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.broker.Owner.OwnerActivity;
 import com.example.broker.R;
 import com.example.broker.Renter.RenterActivity;
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private EditText Email;
     private EditText Password;
+    private LottieAnimationView loadingAnim;
 
     @Override
     public void onStart() {
@@ -77,10 +80,12 @@ public class LoginActivity extends AppCompatActivity {
         Email = findViewById(R.id.LoginMailBox);
         Password = findViewById(R.id.LoginPassBox);
         Button login = findViewById(R.id.LoginBtn);
+        loadingAnim = findViewById(R.id.loadingAnim1);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingAnim.setVisibility(View.VISIBLE);
                 SignIn();
             }
         });
@@ -122,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 users myUser = snapshot.child("user").getValue(users.class);
                                                 SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref",MODE_PRIVATE);
                                                 SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                                                loadingAnim.setVisibility(View.GONE);
                                                 if(myUser == users.Owner){
                                                     myEdit.putString("user","Owner");
                                                     myEdit.apply();
@@ -140,12 +146,15 @@ public class LoginActivity extends AppCompatActivity {
 
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError error) {
+                                                loadingAnim.setVisibility(View.GONE);
+                                                mAuth.signOut();
                                                 Log.i(TAG, "onCancelled: "+error);
                                             }
                                         });
 
                                     }
                                     else{
+                                        loadingAnim.setVisibility(View.GONE);
                                         mAuth.signOut();
                                         Toast.makeText(LoginActivity.this, "Please Verify email and try again", Toast.LENGTH_SHORT).show();
                                     }
@@ -153,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
 //                              updateUI(user);
                             } else {
+                                loadingAnim.setVisibility(View.GONE);
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();

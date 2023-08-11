@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.broker.Main.User;
 import com.example.broker.Owner.OwnerActivity;
 import com.example.broker.R;
@@ -55,6 +56,7 @@ public class PostActivity extends AppCompatActivity {
     EditText etRoomRent;
     EditText etRoomAdvance;
     TextView post;
+    private LottieAnimationView loadingAnim;
 
     Uri selectedImage;
     FirebaseAuth firebaseAuth;
@@ -89,6 +91,7 @@ public class PostActivity extends AppCompatActivity {
         etRoomKitchen = findViewById(R.id.EtRoomsKitchen);
         etRoomRent = findViewById(R.id.EtRoomRent);
         etRoomAdvance = findViewById(R.id.EtRoomAdvance);
+        loadingAnim = findViewById(R.id.loadingAnim3);
 
         post = findViewById(R.id.post);
 
@@ -177,7 +180,7 @@ public class PostActivity extends AppCompatActivity {
             etRoomAdvance.setError("Enter Room Advance");
             return;
         }
-
+        loadingAnim.setVisibility(View.VISIBLE);
         Log.i(TAG, "post: " + roomName + " " + roomAddress + " " + roomBedrooms + " " + roomBathrooms + " " + roomKitchen + " " + roomRent + " " + roomAdvance);
         databaseReference1 = firebaseDatabase.getReference("users/" + firebaseAuth.getUid());
         databaseReference1.addValueEventListener(new ValueEventListener() {
@@ -190,6 +193,7 @@ public class PostActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                loadingAnim.setVisibility(View.GONE);
                 Log.i(TAG, "onCancelled: " + error.getCode());
             }
         });
@@ -219,12 +223,14 @@ public class PostActivity extends AppCompatActivity {
                             }
                         });
                     } else {
+                        loadingAnim.setVisibility(View.VISIBLE);
                         Log.i(TAG, "onComplete: " + task.getException());
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    loadingAnim.setVisibility(View.VISIBLE);
                     Log.i(TAG, "onFailure: " + e);
                 }
             });
@@ -238,6 +244,7 @@ public class PostActivity extends AppCompatActivity {
         databaseReference2.updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                loadingAnim.setVisibility(View.VISIBLE);
                 Toast.makeText(PostActivity.this, "posted", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getApplicationContext(), OwnerActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -247,6 +254,7 @@ public class PostActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                loadingAnim.setVisibility(View.VISIBLE);
                 Log.i(TAG, "onFailure: " + e);
             }
         });

@@ -1,9 +1,5 @@
 package com.example.broker.Main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,15 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.broker.Owner.OwnerActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.broker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,23 +38,19 @@ public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = "OwnerSignup";
     private static final String NoImg = "No Image";
-
-    private FirebaseAuth mAuth;
     FirebaseDatabase database;
     FirebaseStorage storage;
+    LottieAnimationView loadingAnim;
+    private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-
     private EditText etEmail;
     private EditText etPassword;
     private TextView login;
-
-    private  String name;
-    private  String age;
-    private  String phone;
+    private String name;
+    private String age;
+    private String phone;
     private String image;
     private users myuser;
-
-
 
 
     @Override
@@ -76,13 +69,11 @@ public class SignupActivity extends AppCompatActivity {
         age = intent.getStringExtra("age");
         phone = intent.getStringExtra("phone");
         image = intent.getStringExtra("image");
-        if(intent.getIntExtra("users",0) == 0){
+        if (intent.getIntExtra("users", 0) == 0) {
             myuser = users.Renter;
-        }
-        else{
+        } else {
             myuser = users.Owner;
         }
-
 
 
         database = FirebaseDatabase.getInstance();
@@ -93,6 +84,7 @@ public class SignupActivity extends AppCompatActivity {
         login = findViewById(R.id.oSignupLoginBtn);
         etEmail = findViewById(R.id.oSignupMailBox);
         etPassword = findViewById(R.id.oSignupPassBox);
+        loadingAnim = findViewById(R.id.loadingAnim2);
 
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,10 +104,10 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    private void CreateAccount(){
+    private void CreateAccount() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             etEmail.setError("Please type a Email");
             return;
         }
@@ -125,28 +117,28 @@ public class SignupActivity extends AppCompatActivity {
         }
 
 
-
-        mAuth.createUserWithEmailAndPassword(email,password)
+        loadingAnim.setVisibility(View.VISIBLE);
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         etEmail.setText("");
                                         etPassword.setText("");
                                         CreateProfile(mAuth.getCurrentUser());
-                                    }
-                                    else{
+                                    } else {
+                                        loadingAnim.setVisibility(View.GONE);
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                         Toast.makeText(SignupActivity.this, "Could Not send Verification Mail", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-                        }
-                        else{
+                        } else {
+                            loadingAnim.setVisibility(View.GONE);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignupActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                         }
@@ -154,22 +146,24 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    private  void CreateProfile(FirebaseUser user){
-        if(user == null){
+    private void CreateProfile(FirebaseUser user) {
+        if (user == null) {
+            loadingAnim.setVisibility(View.GONE);
             return;
         }
         StorageReference storageReference = storage.getReference().child("Profiles").child(user.getUid());
         databaseReference = database.getReference().child("users");
-        if(image.equals(NoImg)){
+        if (image.equals(NoImg)) {
             String uid = user.getUid();
             String email = user.getEmail();
-            User owner = new User(uid,name,email,image,age,phone,myuser);
+            User owner = new User(uid, name, email, image, age, phone, myuser);
             Map<String, Object> update = new HashMap<>();
             update.put(uid, owner);
             databaseReference.updateChildren(update).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     mAuth.signOut();
+                    loadingAnim.setVisibility(View.GONE);
                     Log.d(TAG, "createUserWithEmail:success");
                     Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     Toast.makeText(SignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
@@ -180,25 +174,25 @@ public class SignupActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.i(TAG, "onFailure: "+e);
+                    loadingAnim.setVisibility(View.GONE);
+                    Log.i(TAG, "onFailure: " + e);
                     mAuth.signOut();
                     Toast.makeText(SignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else{
+        } else {
             Uri imageUri = Uri.parse(image);
             storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 String imageDownloadUri = uri.toString();
                                 String uid = user.getUid();
                                 String email = user.getEmail();
-                                User user = new User(uid,name,email,imageDownloadUri,age,phone,myuser);
+                                User user = new User(uid, name, email, imageDownloadUri, age, phone, myuser);
                                 Map<String, Object> update = new HashMap<>();
                                 update.put(uid, user);
                                 databaseReference
@@ -208,6 +202,7 @@ public class SignupActivity extends AppCompatActivity {
                                             public void onSuccess(Void unused) {
                                                 Log.d(TAG, "createUserWithEmail:success");
                                                 mAuth.signOut();
+                                                loadingAnim.setVisibility(View.GONE);
                                                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 Toast.makeText(SignupActivity.this, "User registered successfully,Please Verify your email", Toast.LENGTH_SHORT).show();
@@ -218,8 +213,9 @@ public class SignupActivity extends AppCompatActivity {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
+                                                loadingAnim.setVisibility(View.GONE);
                                                 mAuth.signOut();
-                                                Log.i(TAG, "onFailure: "+e);
+                                                Log.i(TAG, "onFailure: " + e);
                                                 Toast.makeText(SignupActivity.this, "Failed to upload account details", Toast.LENGTH_SHORT).show();
                                             }
                                         });
@@ -230,7 +226,8 @@ public class SignupActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.w(TAG, "FileUpload : fail",e);
+                    loadingAnim.setVisibility(View.GONE);
+                    Log.w(TAG, "FileUpload : fail", e);
                 }
             });
         }

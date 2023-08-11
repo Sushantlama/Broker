@@ -1,113 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Owner.Fragments.PostActivity">
-    <RelativeLayout
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingAnim3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_anim.json"
+        app:lottie_loop="true" />
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:id="@+id/close" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="post"
-            android:id="@+id/post"
-            android:textSize="16sp"
-            android:layout_marginEnd="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/blue"
-            />
-    </RelativeLayout>
-        <ScrollView
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
-            <LinearLayout
+            android:layout_height="match_parent">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
+                android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/addImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="image"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/ic_launcher" />
-                <EditText
-                    android:id="@+id/EtRoomName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:id="@+id/close" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="post"
+                    android:id="@+id/post"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/blue"
+                    />
+            </RelativeLayout>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="Room name"
-                    android:maxLines="5"
-                    />
-                <EditText
-                    android:id="@+id/EtRoomAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="Address"
-                    android:maxLines="5"
-                    />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <EditText
-                    android:id="@+id/EtRoomBedrooms"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="No of Bedroom(same No of Bed)"
-                    android:ems="10"
-                    android:inputType="number"
-                    />
-                <EditText
-                    android:id="@+id/EtRoomBathrooms"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="No of Bathroom"
-                    android:ems="10"
-                    android:inputType="number"
-                    />
-                <EditText
-                    android:id="@+id/EtRoomsKitchen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="No of Kitchen"
-                    android:ems="10"
-                    android:inputType="number"
-                    />
-                <EditText
-                    android:id="@+id/EtRoomRent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="Rent per Month(in Ruppee)"
-                    android:ems="10"
-                    android:inputType="number"
-                    />
-                <EditText
-                    android:id="@+id/EtRoomAdvance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="Advance(in Ruppee)"
-                    android:ems="10"
-                    android:inputType="number"
-                    />
-            </LinearLayout>
-        </ScrollView>
+                    <ImageView
+                        android:id="@+id/addImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="image"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/ic_launcher" />
+                    <EditText
+                        android:id="@+id/EtRoomName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="Room name"
+                        android:maxLines="5"
+                        />
+                    <EditText
+                        android:id="@+id/EtRoomAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="Address"
+                        android:maxLines="5"
+                        />
 
-</LinearLayout>
+                    <EditText
+                        android:id="@+id/EtRoomBedrooms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="No of Bedroom(same No of Bed)"
+                        android:ems="10"
+                        android:inputType="number"
+                        />
+                    <EditText
+                        android:id="@+id/EtRoomBathrooms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="No of Bathroom"
+                        android:ems="10"
+                        android:inputType="number"
+                        />
+                    <EditText
+                        android:id="@+id/EtRoomsKitchen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="No of Kitchen"
+                        android:ems="10"
+                        android:inputType="number"
+                        />
+                    <EditText
+                        android:id="@+id/EtRoomRent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="Rent per Month(in Ruppee)"
+                        android:ems="10"
+                        android:inputType="number"
+                        />
+                    <EditText
+                        android:id="@+id/EtRoomAdvance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="Advance(in Ruppee)"
+                        android:ems="10"
+                        android:inputType="number"
+                        />
+                </LinearLayout>
+            </ScrollView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
