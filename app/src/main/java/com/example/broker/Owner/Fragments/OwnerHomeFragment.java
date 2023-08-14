@@ -1,5 +1,6 @@
 package com.example.broker.Owner.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.broker.Main.RecyclerViewInterface;
 import com.example.broker.R;
+import com.example.broker.Renter.RoomActivity;
 import com.example.broker.Room.room;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class OwnerHomeFragment extends Fragment {
+public class OwnerHomeFragment extends Fragment implements RecyclerViewInterface {
 
     private static final String TAG = "Home";
 
@@ -57,7 +60,7 @@ public class OwnerHomeFragment extends Fragment {
 
 
         rooms = new ArrayList<>();
-        postAdapter = new PostAdapter(rooms, this);
+        postAdapter = new PostAdapter(rooms, this,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(postAdapter);
 
@@ -96,5 +99,21 @@ public class OwnerHomeFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        room room = rooms.get(position);
+        Intent intent = new Intent(getContext(), RoomActivity.class);
+        intent.putExtra("roomName",room.getRoomName());
+        intent.putExtra("roomAddress",room.getRoomAddress());
+        intent.putExtra("roomBedrooms",room.getRoomBedrooms());
+        intent.putExtra("roomBathrooms",room.getRoomBathrooms());
+        intent.putExtra("roomKitchen",room.getRoomKitchen());
+        intent.putExtra("roomRent",room.getRoomRent());
+        intent.putExtra("roomAdvance",room.getRoomAdvance());
+        intent.putExtra("roomOwner",room.getRoomOwner());
+        intent.putExtra("imageUrl",room.getImageUrl());
+        startActivity(intent);
     }
 }

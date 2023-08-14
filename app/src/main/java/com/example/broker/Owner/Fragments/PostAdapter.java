@@ -11,17 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.broker.Main.RecyclerViewInterface;
 import com.example.broker.R;
 import com.example.broker.Room.room;
 
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
+    private RecyclerViewInterface recyclerViewInterface;
+    private ArrayList<room> rooms;
+    private Fragment fragment;
 
-    ArrayList<room> rooms;
-    Fragment fragment;
-
-    public PostAdapter(ArrayList<room> rooms, Fragment fragment) {
+    public PostAdapter(ArrayList<room> rooms, Fragment fragment,RecyclerViewInterface recyclerViewInterface) {
+        this.recyclerViewInterface = recyclerViewInterface;
         this.rooms = rooms;
         this.fragment = fragment;
     }
@@ -30,7 +32,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
     @Override
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rooms_list_item, parent, false);
-        return new viewHolder(view);
+        return new viewHolder(view,recyclerViewInterface);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         private TextView listRent;
         private TextView listBathrooms;
 
-        public viewHolder(@NonNull View itemView) {
+        public viewHolder(@NonNull View itemView,RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             listImg = itemView.findViewById(R.id.listRoomImg);
             listName = itemView.findViewById(R.id.listName);
@@ -76,6 +78,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             listBeds = itemView.findViewById(R.id.listBeds);
             listRent = itemView.findViewById(R.id.listRent);
             listBathrooms = itemView.findViewById(R.id.listBathrooms);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(recyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+                        if(pos !=  RecyclerView.NO_POSITION){
+                            recyclerViewInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
 
         public ImageView getListImg() {
