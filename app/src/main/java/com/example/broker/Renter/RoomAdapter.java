@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.broker.R;
-import com.example.broker.Renter.Fragments.RecyclerViewInterface;
+import com.example.broker.Main.RecyclerViewInterface;
 import com.example.broker.Room.room;
 
 import java.util.ArrayList;

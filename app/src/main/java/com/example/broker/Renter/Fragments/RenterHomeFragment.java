@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.broker.Main.RecyclerViewInterface;
 import com.example.broker.R;
 import com.example.broker.Renter.RoomActivity;
 import com.example.broker.Renter.RoomAdapter;
@@ -29,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class RenterHomeFragment extends Fragment implements RecyclerViewInterface{
+public class RenterHomeFragment extends Fragment implements RecyclerViewInterface {
 
 
     RecyclerView recyclerView;

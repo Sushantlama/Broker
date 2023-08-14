@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
     android:orientation="vertical"
-    tools:context=".Owner.Fragments.HomeFragment">
+    tools:context=".Owner.Fragments.OwnerHomeFragment">
     <com.airbnb.lottie.LottieAnimationView
         android:visibility="gone"
         android:id="@+id/loadingAnim"
@@ -20,6 +20,8 @@
         app:lottie_loop="true"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
+        tools:listitem="@layout/rooms_list_item"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true" />

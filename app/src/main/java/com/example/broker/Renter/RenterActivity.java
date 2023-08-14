@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.example.broker.R;
 import com.example.broker.Renter.Fragments.RenterHomeFragment;
+import com.example.broker.Renter.Fragments.RenterMessagesFragment;
 import com.example.broker.Renter.Fragments.RenterProfileFragment;
 import com.example.broker.Renter.Fragments.RenterSearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -43,6 +44,9 @@ public class RenterActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.rhome) {
                     getSupportActionBar().setTitle("Broker");
                     replaceFragment(new RenterHomeFragment());
+                } else if (item.getItemId() == R.id.rMessage) {
+                    getSupportActionBar().setTitle("Broker");
+                    replaceFragment(new RenterMessagesFragment());
                 } else if (item.getItemId() == R.id.rsearch) {
                     getSupportActionBar().setTitle("Search");
                     replaceFragment(new RenterSearchFragment());

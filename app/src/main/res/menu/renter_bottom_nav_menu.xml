@@ -3,8 +3,10 @@
 
     <item android:id="@+id/rhome"
         android:title="Home"
-        android:icon="@drawable/baseline_home_20"
-        />
+        android:icon="@drawable/baseline_home_20" />
+    <item android:id="@+id/rMessage"
+        android:title="Messages"
+        android:icon="@drawable/baseline_message_20"/>
     <item android:id="@+id/rsearch"
         android:title="Search"
         android:icon="@drawable/baseline_search_20"/>

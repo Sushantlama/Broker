@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
 
-public class ProfileFragment extends Fragment {
+public class OwnerProfileFragment extends Fragment {
 
     private static final String TAG = "Profile Fragment";
 
@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_owner_profile, container, false);
     }
 
     @Override

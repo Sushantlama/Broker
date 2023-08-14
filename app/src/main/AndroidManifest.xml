@@ -20,6 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Owner.OwnerChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Renter.RoomActivity"
             android:exported="false" />
         <activity
