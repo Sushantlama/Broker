@@ -22,6 +22,7 @@ public class OwnerChatActivity extends AppCompatActivity {
         String username = intent.getStringExtra("username");
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.theme_color)));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(username!=null){
             getSupportActionBar().setTitle(username);
         }
@@ -30,5 +31,11 @@ public class OwnerChatActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.theme_color));
         window.setNavigationBarColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 }

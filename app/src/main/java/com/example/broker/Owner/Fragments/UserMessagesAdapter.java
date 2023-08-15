@@ -22,6 +22,7 @@ public class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapte
     private final RecyclerViewInterface recyclerViewInterface;
     private Fragment fragment;
     private ArrayList<User> users;
+
     public UserMessagesAdapter(RecyclerViewInterface recyclerViewInterface, Fragment fragment, ArrayList<User> users){
         this.recyclerViewInterface = recyclerViewInterface;
         this.fragment = fragment;
