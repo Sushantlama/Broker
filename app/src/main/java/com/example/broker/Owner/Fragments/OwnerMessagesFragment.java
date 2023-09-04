@@ -17,16 +17,19 @@ import com.example.broker.Main.User;
 import com.example.broker.Owner.OwnerChatActivity;
 import com.example.broker.R;
 import com.example.broker.Renter.RoomActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class OwnerMessagesFragment extends Fragment implements RecyclerViewInterface {
 
     FirebaseDatabase database;
+    FirebaseAuth firebaseAuth;
     ArrayList<User> users;
     UserMessagesAdapter userMessagesAdapter;
     RecyclerView messagesRecyclerView;
@@ -40,6 +43,7 @@ public class OwnerMessagesFragment extends Fragment implements RecyclerViewInter
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         database = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         users = new ArrayList<>();
         userMessagesAdapter = new UserMessagesAdapter(this, this,users);
         messagesRecyclerView = view.findViewById(R.id.messagesRecyclerView);
@@ -49,6 +53,9 @@ public class OwnerMessagesFragment extends Fragment implements RecyclerViewInter
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot mysnapshot : snapshot.getChildren()){
                     User user = mysnapshot.getValue(User.class);
+                    if(Objects.equals(user.getUid(), firebaseAuth.getUid())){
+                        continue;
+                    }
                     users.add(user);
                 }
                 userMessagesAdapter.notifyDataSetChanged();
@@ -66,7 +73,8 @@ public class OwnerMessagesFragment extends Fragment implements RecyclerViewInter
     public void onItemClick(int position) {
         User user = users.get(position);
         Intent intent = new Intent(getContext(), OwnerChatActivity.class);
-        intent.putExtra("username",user.getName());
+        intent.putExtra("name",user.getName());
+        intent.putExtra("uid",user.getUid());
         startActivity(intent);
     }
 }

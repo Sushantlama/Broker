@@ -13,14 +13,13 @@ import java.util.ArrayList;
 
 public class MessageAdapter extends RecyclerView.Adapter{
 
-    private final RecyclerViewInterface recyclerViewInterface;
     private ArrayList<Message> messages;
     private Context context;
     final int ITEM_SEND = 1;
     final int ITEM_RECEIVE =2;
 
-    public MessageAdapter(RecyclerViewInterface recyclerViewInterface, Context context, ArrayList<Message> messages) {
-        this.recyclerViewInterface = recyclerViewInterface;
+    public MessageAdapter( Context context, ArrayList<Message> messages) {
+        this.context = context;
         this.messages = messages;
     }
 
