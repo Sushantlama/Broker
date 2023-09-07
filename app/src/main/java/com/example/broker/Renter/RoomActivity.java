@@ -107,7 +107,7 @@ public class RoomActivity extends AppCompatActivity {
             roomBedsTv.setText(roomBedrooms);
             roomBathsTv.setText(roomBathrooms);
             roomKitchenTv.setText(roomKitchen);
-            roomRentTv.setText(roomRent);
+            roomRentTv.setText(roomRent+" inr/month");
 
             chatBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
