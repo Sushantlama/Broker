@@ -1,4 +1,4 @@
-package com.example.broker.Main;
+package com.example.broker.Main.classes;
 
 public class Message {
     private String messageId, message, senderId;

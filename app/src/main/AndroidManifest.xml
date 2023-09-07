@@ -23,7 +23,7 @@
             android:name=".Owner.OwnerRoomActivity"
             android:exported="false" />
         <activity
-            android:name=".Owner.OwnerChatActivity"
+            android:name=".Main.activities.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".Renter.RoomActivity"
@@ -35,10 +35,10 @@
             android:name=".Owner.Fragments.PostActivity"
             android:exported="false" />
         <activity
-            android:name=".Main.SetupProfileActivity"
+            android:name=".Main.activities.SetupProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Main.LoginActivity"
+            android:name=".Main.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,13 +47,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Main.SignupActivity"
+            android:name=".Main.activities.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".Owner.OwnerActivity"
             android:exported="false" />
         <activity
-            android:name=".Main.MainActivity"
+            android:name=".Main.activities.MainActivity"
             android:exported="false" />
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.broker.Main;
+package com.example.broker.Main.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.broker.Main.classes.Message;
 import com.example.broker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class MessageAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
-        return 0;
+        return messages.size();
     }
 
     public class SendViewHolder extends RecyclerView.ViewHolder{

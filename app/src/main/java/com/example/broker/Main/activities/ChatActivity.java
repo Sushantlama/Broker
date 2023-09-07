@@ -1,7 +1,10 @@
-package com.example.broker.Owner;
+package com.example.broker.Main.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -11,31 +14,34 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.broker.Main.Message;
-import com.example.broker.Main.MessageAdapter;
-import com.example.broker.Owner.Fragments.OwnerHomeFragment;
+import com.example.broker.Main.classes.Message;
+import com.example.broker.Main.adapters.MessageAdapter;
 import com.example.broker.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
-public class OwnerChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     MessageAdapter adapter;
     ArrayList<Message> messages;
     String senderRoom,receiverRoom;
 
     FirebaseDatabase database;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_chat);
+        setContentView(R.layout.activity_chat);
         Intent intent = getIntent();
 
         String username = intent.getStringExtra("name");
@@ -59,36 +65,72 @@ public class OwnerChatActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         EditText messageBox = findViewById(R.id.messageBox);
-        ImageView sendBtn = (ImageView)findViewById(R.id.messageSendBtn);
+        ImageView sendBtn = (ImageView)findViewById(R.id.ownerMessageSendBtn);
+        recyclerView = findViewById(R.id.ownerMessagesRV);
+        messages = new ArrayList<>();
+        adapter = new MessageAdapter(this,messages);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        database.getReference()
+                .child("chats")
+                        .child(senderRoom)
+                                .child("messages")
+                                        .addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                messages.clear();
+                                                for(DataSnapshot snapshot1 : snapshot.getChildren()){
+                                                    Message message = snapshot1.getValue(Message.class);
+                                                    messages.add(message);
+                                                }
+                                                adapter.notifyDataSetChanged();
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String MessageText = messageBox.getText().toString();
+                messageBox.setText("");
                 Date date = new Date();
                 Message message = new Message(MessageText,senderUid,date.getTime());
+
+                HashMap<String,Object> lastMsgObj = new HashMap<>();
+                lastMsgObj.put("lastMsg",message.getMessage());
+                lastMsgObj.put("lastMsgTime",date.getTime());
+                database.getReference().child("chats").child(senderRoom).updateChildren(lastMsgObj);
+                database.getReference().child("chats").child(receiverRoom).updateChildren(lastMsgObj);
 
                 database.getReference().child("chats")
                         .child(senderRoom)
                         .child("messages")
+                        .push() //push creates a unique node each time it is called
                         .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 database.getReference().child("chats")
                                         .child(receiverRoom)
                                         .child("messages")
+                                        .push()
                                         .setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Toast.makeText(OwnerChatActivity.this, "Message Sent SuccessFully", Toast.LENGTH_SHORT).show();
+
                                             }
                                         });
+
                             }
                         });
             }
         });
 
-        messages = new ArrayList<>();
-        adapter = new MessageAdapter(this,messages);
+
     }
 
     @Override

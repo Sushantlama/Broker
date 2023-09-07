@@ -1,4 +1,6 @@
-package com.example.broker.Main;
+package com.example.broker.Main.classes;
+
+import com.example.broker.Main.users;
 
 public class User {
     private String uid,name,Email,profileImage,age,phoneNumber;

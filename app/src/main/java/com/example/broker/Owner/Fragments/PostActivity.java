@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.example.broker.Main.User;
+import com.example.broker.Main.classes.User;
 import com.example.broker.Owner.OwnerActivity;
 import com.example.broker.R;
 import com.example.broker.Room.room;

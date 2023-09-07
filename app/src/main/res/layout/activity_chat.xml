@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#42A5F5"
-    tools:context=".Owner.OwnerChatActivity">
+    tools:context=".Main.activities.ChatActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -16,7 +16,7 @@
         android:layout_marginBottom="8dp"
         app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/messageSendBtn"
+        app:layout_constraintEnd_toStartOf="@+id/ownerMessageSendBtn"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
@@ -42,7 +42,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/messageSendBtn"
+        android:id="@+id/ownerMessageSendBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -57,9 +57,10 @@
         app:srcCompat="@android:drawable/ic_menu_send" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messagesRV"
+        android:id="@+id/ownerMessagesRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

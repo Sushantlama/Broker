@@ -48,7 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         holder.getListKitchen().setText(String.valueOf(room.getRoomKitchen()));
         holder.getListAddress().setText(room.getRoomAddress());
         holder.getListBeds().setText(String.valueOf(room.getRoomBedrooms()));
-        holder.getListRent().setText(room.getRoomRent() + "/month");
+        holder.getListRent().setText(room.getRoomRent() + " inr/month");
         holder.getListBathrooms().setText(String.valueOf(room.getRoomBathrooms()));
 
     }

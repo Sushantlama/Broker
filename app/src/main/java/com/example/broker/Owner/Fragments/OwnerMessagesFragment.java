@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.broker.Main.RecyclerViewInterface;
-import com.example.broker.Main.User;
-import com.example.broker.Owner.OwnerChatActivity;
+import com.example.broker.Main.adapters.UserMessagesAdapter;
+import com.example.broker.Main.classes.User;
+import com.example.broker.Main.activities.ChatActivity;
 import com.example.broker.R;
-import com.example.broker.Renter.RoomActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +46,7 @@ public class OwnerMessagesFragment extends Fragment implements RecyclerViewInter
         firebaseAuth = FirebaseAuth.getInstance();
         users = new ArrayList<>();
         userMessagesAdapter = new UserMessagesAdapter(this, this,users);
-        messagesRecyclerView = view.findViewById(R.id.messagesRecyclerView);
+        messagesRecyclerView = view.findViewById(R.id.ownerMessagesRecyclerView);
         messagesRecyclerView.setAdapter(userMessagesAdapter);
         database.getReference().child("users").addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,7 +72,7 @@ public class OwnerMessagesFragment extends Fragment implements RecyclerViewInter
     @Override
     public void onItemClick(int position) {
         User user = users.get(position);
-        Intent intent = new Intent(getContext(), OwnerChatActivity.class);
+        Intent intent = new Intent(getContext(), ChatActivity.class);
         intent.putExtra("name",user.getName());
         intent.putExtra("uid",user.getUid());
         startActivity(intent);

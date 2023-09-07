@@ -1,4 +1,4 @@
-package com.example.broker.Main;
+package com.example.broker.Main.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.broker.Main.classes.User;
+import com.example.broker.Main.users;
 import com.example.broker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

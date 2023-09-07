@@ -1,4 +1,4 @@
-package com.example.broker.Main;
+package com.example.broker.Main.activities;
 
 
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.broker.Main.users;
 import com.example.broker.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;

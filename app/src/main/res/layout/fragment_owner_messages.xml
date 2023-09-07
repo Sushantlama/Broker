@@ -9,7 +9,7 @@
     tools:context=".Owner.Fragments.OwnerMessagesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messagesRecyclerView"
+        android:id="@+id/ownerMessagesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/row_conversation"

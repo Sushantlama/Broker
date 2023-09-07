@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@color/navy_blue2"
+    android:background="?selectableItemBackground"
     android:padding="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView

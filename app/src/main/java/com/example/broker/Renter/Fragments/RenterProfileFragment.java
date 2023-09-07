@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.broker.Main.LoginActivity;
-import com.example.broker.Main.User;
+import com.example.broker.Main.activities.LoginActivity;
+import com.example.broker.Main.classes.User;
 import com.example.broker.Main.users;
 import com.example.broker.R;
 import com.google.firebase.auth.FirebaseAuth;

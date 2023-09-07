@@ -1,4 +1,4 @@
-package com.example.broker.Main;
+package com.example.broker.Main.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.broker.Main.users;
 import com.example.broker.Owner.OwnerActivity;
 import com.example.broker.R;
 import com.example.broker.Renter.RenterActivity;
